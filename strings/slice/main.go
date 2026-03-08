@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -12,13 +13,22 @@ func inputText() string {
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Scan()
 	return strings.TrimSpace(scanner.Text())
-
 }
+
+func splitInput(s string) ([]string, error) {
+	if !strings.Contains(s, ",") {
+		return nil, errors.New("error: input must contain ',' as separator")
+	}
+
+	return strings.Split(s, ","), nil
+}
+
 func main() {
 	s := inputText()
-	if !strings.Contains(s, ",") {
-		fmt.Fprintln(os.Stderr, "error: input must contain ',' ")
-		os.Exit(1)
+	result, err := splitInput(s)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return
 	}
-	fmt.Println(strings.Split(s, ","))
+	fmt.Println(result)
 }
