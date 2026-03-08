@@ -1,3 +1,5 @@
+// Read comma-separated input from stdin, validate it contains a comma,
+// then split and print the resulting slice.
 package main
 
 import (
@@ -8,6 +10,7 @@ import (
 	"strings"
 )
 
+// inputText prompts the user and reads one trimmed line from stdin.
 func inputText() string {
 	fmt.Print("Enter comma-separated values: ")
 	scanner := bufio.NewScanner(os.Stdin)
@@ -15,12 +18,11 @@ func inputText() string {
 	return strings.TrimSpace(scanner.Text())
 }
 
-// // use package errors to return error
+// splitInput splits on comma and returns the slice, or an error if there is no comma.
 func splitInput(s string) ([]string, error) {
 	if !strings.Contains(s, ",") {
 		return nil, errors.New("error: input must contain ',' as separator")
 	}
-
 	return strings.Split(s, ","), nil
 }
 
