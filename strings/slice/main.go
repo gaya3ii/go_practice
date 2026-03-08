@@ -7,14 +7,18 @@ import (
 	"strings"
 )
 
-func main() {
+func inputText() string {
 	fmt.Print("Enter comma-separated values: ")
 	scanner := bufio.NewScanner(os.Stdin)
 	scanner.Scan()
-	input := strings.TrimSpace(scanner.Text())
-	if !strings.Contains(input, ",") {
+	return strings.TrimSpace(scanner.Text())
+
+}
+func main() {
+	s := inputText()
+	if !strings.Contains(s, ",") {
 		fmt.Fprintln(os.Stderr, "error: input must contain ',' ")
 		os.Exit(1)
 	}
-	fmt.Println(strings.Split(input, ","))
+	fmt.Println(strings.Split(s, ","))
 }
