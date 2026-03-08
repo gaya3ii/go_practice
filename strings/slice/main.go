@@ -15,6 +15,7 @@ func inputText() string {
 	return strings.TrimSpace(scanner.Text())
 }
 
+// // use package errors to return error
 func splitInput(s string) ([]string, error) {
 	if !strings.Contains(s, ",") {
 		return nil, errors.New("error: input must contain ',' as separator")
