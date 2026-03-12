@@ -7,13 +7,14 @@ import (
 	"strings"
 )
 
+// checks for the order of opening and closing brackets
 func isValid(s string) bool {
 	pair := map[rune]rune{
 		')': '(',
 		']': '[',
 		'}': '{',
 	}
-	var stack []rune
+	stack := []rune{}
 	for _, r := range s {
 		switch r {
 		case '(', '[', '{':
@@ -39,7 +40,7 @@ func main() {
 	input := strings.TrimSpace(scanner.Text())
 	if input == "" {
 		fmt.Fprintln(os.Stderr, "error: empty input")
-		os.Exit(1)
+		return
 	}
 	fmt.Println(isValid(input))
 }
