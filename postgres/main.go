@@ -3,16 +3,49 @@ package main
 import (
 	"fmt"
 
+	"time"
+
+	"encoding/json"
+	"net/http"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 // define model
 type User struct {
-	gorm.Model
-	Name  string
-	Email string
-	Age   int
+	ID        uint `gorm:"primaryKey"`
+	Name      string
+	Email     string
+	Age       int
+	UpdatedAt time.Time
+	CreatedAt time.Time
+}
+
+type Handler struct {
+	db *gorm.DB
+}
+
+func (h *Handler) getUsers(w http.ResponseWriter, r *http.Request) {
+	var users []User
+	h.db.Find(&users)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(users)
+}
+
+func (h *Handler) createUser(w http.ResponseWriter, r *http.Request) {
+	var user User
+	json.NewDecoder(r.Body).Decode(&user)
+	h.db.Create(&user)
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(user)
+}
+
+func (h *Handler) deleteUser(w http.ResponseWriter, r *http.Request) {
+	id := r.URL.Query().Get("id")
+	h.db.Unscoped().Delete(&User{}, id)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func main() {
@@ -27,23 +60,14 @@ func main() {
 
 	// auto create table
 	db.AutoMigrate(&User{})
-	fmt.Println("table created!")
 
-	// create a user
-	db.Create(&User{Name: "John", Email: "john@example.com", Age: 25})
+	h := &Handler{db: db}
 
-	var user User
-	db.First(&user, 5)
-	db.Delete(&user)
-	fmt.Println("before:", user.Name)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/users", h.getUsers)
+	mux.HandleFunc("/users/create", h.createUser)
+	mux.HandleFunc("/users/delete", h.deleteUser)
 
-	// update name
-	db.Model(&user).Update("name", "Jane")
-	fmt.Println("after:", user.Name)
-	fmt.Println("user created!")
-
-	// read all users
-	var users []User
-	db.Find(&users)
-	fmt.Println("users:", users)
+	fmt.Println("Server starting on :8080")
+	http.ListenAndServe(":8080", mux)
 }
