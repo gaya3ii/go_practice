@@ -9,7 +9,8 @@ import (
 	// "github.com/gayathriad/go_practice/algorithms/sliding_window"
 	// "github.com/gayathriad/go_practice/algorithms/sorting"
 	// "github.com/gayathriad/go_practice/algorithms/stack"
-	"github.com/gayathriad/go_practice/algorithms/two_pointers"
+	//"github.com/gayathriad/go_practice/algorithms/sliding_window"
+	"github.com/gayathriad/go_practice/algorithms/prefix_sum"
 )
 
 func main() {
@@ -34,20 +35,23 @@ func main() {
 	// fmt.Println("SuperReducedStrings:", stack.SuperReducedStrings("aabccba"))
 	// fmt.Println("IsValid:", stack.IsValid("([{}])"))
 
-	fmt.Println("\n-- two_pointers --")
-	cycleNode := &two_pointers.ListNode{Value: 2}
-	cycleNode.Next = &two_pointers.ListNode{Value: 3, Next: cycleNode}
-	cycleHead := &two_pointers.ListNode{Value: 1, Next: cycleNode}
-	fmt.Println("HasCycle:", two_pointers.HasCycle(cycleHead))
+	// fmt.Println("\n-- two_pointers --")
+	// cycleNode := &two_pointers.ListNode{Value: 2}
+	// cycleNode.Next = &two_pointers.ListNode{Value: 3, Next: cycleNode}
+	// cycleHead := &two_pointers.ListNode{Value: 1, Next: cycleNode}
+	// fmt.Println("HasCycle:", two_pointers.HasCycle(cycleHead))
 
-	list1 := &two_pointers.ListNode{Value: 1, Next: &two_pointers.ListNode{Value: 2, Next: &two_pointers.ListNode{Value: 4}}}
-	list2 := &two_pointers.ListNode{Value: 1, Next: &two_pointers.ListNode{Value: 3, Next: &two_pointers.ListNode{Value: 4}}}
-	merged := two_pointers.MergeSortedArray(list1, list2)
-	fmt.Print("MergeSortedArray: ")
-	for n := merged; n != nil; n = n.Next {
-		fmt.Print(n.Value, " ")
-	}
-	fmt.Println()
+	// list1 := &two_pointers.ListNode{Value: 1, Next: &two_pointers.ListNode{Value: 2, Next: &two_pointers.ListNode{Value: 4}}}
+	// list2 := &two_pointers.ListNode{Value: 1, Next: &two_pointers.ListNode{Value: 3, Next: &two_pointers.ListNode{Value: 4}}}
+	// merged := two_pointers.MergeSortedArray(list1, list2)
+	// fmt.Print("MergeSortedArray: ")
+	// for n := merged; n != nil; n = n.Next {
+	// 	fmt.Print(n.Value, " ")
+	// }
+	// fmt.Println()
 
-	fmt.Println("IsPalindrome:", two_pointers.IsPalindrome("A man, a plan, a canal: Panama"))
+	// fmt.Println("IsPalindrome:", two_pointers.IsPalindrome("A man, a plan, a canal: Panama"))
+
+	// fmt.Println("maxvowels:", sliding_window.MaxVowels("abciiidef", 3))
+	fmt.Println("NumeberOfSubarrays:", prefix_sum.NumberOfSubarrays([]int{1, 1, 2, 1, 1}, 3))
 }
