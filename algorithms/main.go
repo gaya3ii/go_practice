@@ -10,6 +10,7 @@ import (
 	// "github.com/gayathriad/go_practice/algorithms/sorting"
 	// "github.com/gayathriad/go_practice/algorithms/stack"
 	//"github.com/gayathriad/go_practice/algorithms/sliding_window"
+	"github.com/gayathriad/go_practice/algorithms/lld"
 	"github.com/gayathriad/go_practice/algorithms/prefix_sum"
 )
 
@@ -54,4 +55,7 @@ func main() {
 
 	// fmt.Println("maxvowels:", sliding_window.MaxVowels("abciiidef", 3))
 	fmt.Println("NumeberOfSubarrays:", prefix_sum.NumberOfSubarrays([]int{1, 1, 2, 1, 1}, 3))
+
+	fmt.Println("\n-- lld --")
+	lld.RunDemo()
 }
